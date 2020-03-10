@@ -10,6 +10,12 @@
   <packaging>pom</packaging>
   <modules>
     <module>cloud-provider-payment8001</module>
+      <module>cloud2020-api</module>
+    <module>cloud-consumer-order80</module>
+      <module>cloud-euraka-server7001</module>
+      <module>cloud-euraka-server7002</module>
+      <module>cloud-provider-payment8002</module>
+      <module>cloud-provider-payment8004</module>
   </modules>
 
   <!-- 纺一管理jar包版本  因为下面的包在子工程也用得到的-->
@@ -117,9 +123,11 @@
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-site-plugin</artifactId>
+        <artifactId>maven-resources-plugin</artifactId>
         <configuration>
-          <locales>en,fr</locales>
+          <delimiters>
+            <delimit>$</delimit>
+          </delimiters>
         </configuration>
       </plugin>
     </plugins>

@@ -5,13 +5,10 @@ import com.smgk.springcloud.bean.Payment;
 import com.smgk.springcloud.service.PaymentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cloud.client.ServiceInstance;
-import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.web.bind.annotation.*;
 
 
 import javax.annotation.Resource;
-import java.util.List;
 
 @RestController
 @Slf4j
@@ -23,9 +20,6 @@ public class PaymentController {
 
     @Resource
     private PaymentService paymentService;
-    @Resource
-    private DiscoveryClient discoveryClient;
-
 
     @PostMapping(value = "/payment/create")
     public CommonResult create(@RequestBody Payment payment){
@@ -49,22 +43,5 @@ public class PaymentController {
             return new CommonResult(400, "查找失败 -->post: " + post, null);
 
         }
-    }
-
-    /**
-     * 服务发现：能过 discoveryClient 获取微服务信息
-     */
-    @GetMapping(value = "/payment/dist")
-    public Object getInfo(){
-        List<String> services = discoveryClient.getServices();
-        for (String serv : services){
-            log.info("********* "+ serv +"  ********");
-        }
-        List<ServiceInstance> instances = discoveryClient.getInstances("CLOUD-PAYMENT-SERVICE");//通过微服务获取实例
-        for (ServiceInstance inst : instances){
-            log.info("************  "+inst.getPort() + inst.getServiceId()+"  ********");
-        }
-        return this.discoveryClient;
-
     }
 }
