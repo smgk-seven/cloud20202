@@ -44,4 +44,16 @@ public class PaymentController {
 
         }
     }
+
+    @GetMapping(value = "/payment/outTime")
+    public CommonResult getOutTime(){
+        String msg = "超时测试成功: " + post;
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            log.error("出错了");
+            msg = "超时失败 ： "+ post;
+        }
+        return new CommonResult(200, msg);
+    }
 }
