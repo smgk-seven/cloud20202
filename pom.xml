@@ -18,9 +18,11 @@
       <module>cloud-provider-payment8004</module>
       <module>cloud-providerconsul-payment8006</module>
       <module>cloud-consumerzk-order80</module>
-      <module>cloud.consumer-ribbon-order80</module>
-    <module>cloud-comsumer-ribbon-order80</module>
+      <module>cloud-comsumer-ribbon-order80</module>
       <module>cloud-consumer-openfeign-order80</module>
+      <module>cloud-provider-hystrix-payment8001</module>
+      <module>cloud-consumer-feign-hystrix-order80</module>
+      <module>cloud-consumer-hystrix-dashboard9001</module>
   </modules>
 
   <!-- 纺一管理jar包版本  因为下面的包在子工程也用得到的-->
