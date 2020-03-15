@@ -1,0 +1,11 @@
+
+手工更新配置
+1. 在controller加入注解@RefreshScope
+2. 修改配置文件加入
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+3.手工发一个post请求
+curl -X POST "http://localhost:3355/actuator/refresh"
