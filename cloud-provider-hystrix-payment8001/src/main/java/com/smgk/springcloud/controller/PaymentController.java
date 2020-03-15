@@ -38,7 +38,7 @@ public class PaymentController {
     }
 
 
-    //********           服务骗熔断                  **
+    //********           服务熔断                  **
 
     /**
      * 服务熔断

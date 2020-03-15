@@ -1,0 +1,30 @@
+server:
+  port: 9527
+spring:
+  application:
+    name: cloud-gateway
+  #配置路由
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true # 开启从注册中心动态创建路由的功能，利用微服务名称j进行路由
+      routes:
+        - id: payment_route # 路由的id,没有规定规则但要求唯一,建议配合服务名
+          #uri: http://localhost:8001 #匹配后提供服务的路由地址
+          uri: lb://CLOUD-PAYMENT-SERVICE #从微服务中进入服务
+          predicates:
+            - Path=/payment/get/** #配置资源路径
+            #- Cookie=param,smgk #访问这个地址必须cookie参数 param = smgk
+        #- id: payment_route2 # 路由的id,没有规定规则但要求唯一,建议配合服务名
+          #uri: http://localhost:8001 #匹配后提供服务的路由地址
+          #predicates:
+            #- Path=/payment/get/** #配置资源路径
+eureka:
+  instance:
+    hostname: cloud-gateway-service
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://eureka7001.com:7001/eureka/

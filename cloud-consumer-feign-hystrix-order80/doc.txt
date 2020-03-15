@@ -1,2 +1,12 @@
-hystrix
-1.直接对类针对 性的
+针对 接口
+@FeignClient(value = "CLOUD-PROVIDER-HYSTRIX-PAYMENT", fallback = PaymentHystrixServiceImp.class)
+这里如果加入了fallback，是默认对客户端调动服务端的一整 个接口进行监听，如果出了异常会
+自动执行fallback里面的类对应的继承接口方法，注意，这种方法是针对服务端的异常和超时，如果
+客户端超时和异常是不会有效果的
+
+
+
+针对 controller
+//@DefaultProperties(defaultFallback = "paymentGlobalMethod")
+在controller可以设置一个默认的全局方法，在需要进行监听的方法里面加上@HystrixCommand即可
+这里针对客户端和服务端，反正加了@HystrixCommand注解的方法只要超时或者异常都会执行defaultFallback里面的方法

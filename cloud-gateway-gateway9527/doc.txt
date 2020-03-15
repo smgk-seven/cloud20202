@@ -1,0 +1,101 @@
+predicates中的配置信息
+Path
+配置对于请求路径的匹配规则
+
+yml配置，多个参数用逗号隔开
+- Path = /aa/**,/bb/**
+json配置
+{"name":"Path","args":{"pattern":"/aa/**","pattern1":"/bb/**"}}
+Cookie
+配置对Cookie中值的匹配，第一个为key，第二个为value。下例匹配cookie设置chocolate:ch.p的请求
+
+yml配置
+- Cookie = chocolate,ch.p
+json配置
+{"name":"Cookie","args":{"_genkey_0":"chocolate","_genkey_1":"ch.p"}}
+Header
+匹配Http请求中设置的内容，http-header设置X-Request-Id:\d+可以匹配，第二个参数第二个参数是正则表达式
+
+yml配置
+- Header = X-Request-Id,\d+
+json配置
+{"name":"Header","args":{"_genkey_0":"X-Request-Id","_genkey_1":"\d+"}}
+Host
+匹配Http请求Host，匹配所有host为**.somehost.com的请求
+
+yml配置
+- Host = **.somehost.com
+json配置
+{"name":"Host","args":{"_genkey_0":"**.somehost.com"}}
+Method
+匹配Http请求头
+
+yml配置
+- Method = GET
+json配置
+{"name":"Method","args":{"_genkey_0":"GET"}}
+Query
+匹配Http请求中的查询参数，请求中携带param1=value的请求可以匹配
+
+yml配置
+- Query = param1,value
+json配置
+{"name":"Query","args":{"_genkey_0":"param1","_genkey_1":"value"}}
+RemoteAddr
+匹配请求中的RemoteAddr
+
+yml配置
+- RemoteAddr = 192.168.1.1/24
+json配置
+{"name":"RemoteAddr","args":{"_genkey_0":"192.168.1.1/24"}}
+时间相关
+After
+设置时间之后可以访问
+yml配置
+- After = 2017-01-20T17:42:47.789-07:00[America/Denver]
+json配置
+{"name":"After","args":{"_genkey_0":"2017-01-20T17:42:47.789-07:00[America/Denver]"}}
+Before
+设置时间之前可以访问
+yml配置
+- Before = 2017-01-20T17:42:47.789-07:00[America/Denver]
+json配置
+{"name":"Before","args":{"_genkey_0":"2017-01-20T17:42:47.789-07:00[America/Denver]"}}
+
+在windows中发一个带cookie的请求
+curl http://localhost:9257/payment/get/2 --cookie "smgk"
+
+
+参考一个完整点的配置文件
+server:
+  port: 9527
+spring:
+  application:
+    name: cloud-gateway
+  #配置路由
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true # 开启从注册中心动态创建路由的功能，利用微服务名称j进行路由
+      routes:
+        - id: payment_route # 路由的id,没有规定规则但要求唯一,建议配合服务名
+          #匹配后提供服务的路由地址
+          uri: http://localhost:8001
+          predicates:
+            - Path=/payment/get/** # 断言，路径相匹配的进行路由
+            #- After=2017-01-20T17:42:47.789-07:00[America/Denver]
+            #- Before=2017-01-20T17:42:47.789-07:00[America/Denver]
+            #- Cookie=username,zzyy
+            #- Header=X-Request-Id, \d+ #请求头要有X-Request-Id属性，并且值为正数
+            #- Host=**.atguigu.com
+            #- Method=GET
+            #- Query=username, \d+ # 要有参数名username并且值还要是正整数才能路由
+          # 过滤
+          #filters:
+          #  - AddRequestHeader=X-Request-red, blue
+        - id: payment_route2
+          uri: http://localhost:8001
+          predicates:
+            Path=/payment/lb/** #断言,路径相匹配的进行路由
+
