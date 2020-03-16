@@ -1,0 +1,3 @@
+http://localhost:3344/master/config-dev.yml
+
+http://localhost:3344/actuator/bus-refresh
