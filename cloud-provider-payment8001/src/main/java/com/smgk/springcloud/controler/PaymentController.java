@@ -79,4 +79,10 @@ public class PaymentController {
         }
         return new CommonResult(200, msg);
     }
+
+    //test zipkin服务请求是否被 监控到
+    @GetMapping("/payment/zipkin")
+    public String testZipkin(){
+        return "测试 zipkin 请求监控: " + post;
+    }
 }
