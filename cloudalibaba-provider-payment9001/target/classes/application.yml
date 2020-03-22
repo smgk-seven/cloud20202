@@ -7,7 +7,6 @@ spring:
     nacos:
       discovery:
         server-addr: 192.168.124.128:8848
-
 management:
   endpoints:
     web:
