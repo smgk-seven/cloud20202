@@ -3,6 +3,7 @@ package com.smgk.springcloud.controller;
 import com.smgk.springcloud.bean.CommonResult;
 import com.smgk.springcloud.bean.Payment;
 import com.smgk.springcloud.server.PaymentService;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,4 +22,9 @@ public class CircleBreakerController {
         return paymentService.paymentSQL(id);
     }
 
+    @GetMapping("/testSaveConfInfo")
+    public CommonResult testSaveConfInfo(){
+        CommonResult<Payment> returnStr = paymentSQL(new Long(1));
+        return returnStr;
+    }
 }
